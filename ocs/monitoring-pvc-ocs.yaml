@@ -10,7 +10,7 @@ data:
         metadata:
           name: prometheusdb
         spec:
-          storageClassName: ocs-storagecluster-ceph-rbd
+          storageClassName: ocs-external-storagecluster-ceph-rbd
           resources:
             requests:
               storage: 30Gi
@@ -19,7 +19,7 @@ data:
         metadata:
           name: alertmanager
         spec:
-          storageClassName: ocs-storagecluster-ceph-rbd
+          storageClassName:ocs-external-storagecluster-ceph-rbd
           resources:
             requests:
               storage: 30Gi
