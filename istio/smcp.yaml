@@ -51,3 +51,10 @@ spec:
     tracing:
       enabled: true
 
+#    tracing:
+#      type: None
+#    techPreview:
+#      global:
+#        tracer:
+#          zipkin:
+#           address: zipkin-1.lab.local:9411
