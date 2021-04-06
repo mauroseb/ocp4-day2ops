@@ -6,4 +6,12 @@ metadata:
   namespace: openshift-monitoring
 data:
   config.yaml: |
-    enableUserWorkload: true 
+    enableUserWorkload: true
+    prometheusK8s:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 1Gi
+        limits:
+          cpu: 900m
+          memory: 2Gi
