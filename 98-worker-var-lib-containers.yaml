@@ -16,34 +16,34 @@ spec:
       units:
       - contents: |
           [Unit]
-          Description=Make File System on /dev/sdb
+          Description=Make File System on /dev/vdb
           DefaultDependencies=no
-          BindsTo=dev-sdb.device
-          After=dev-sdb.device var.mount
-          Before=systemd-fsck@dev-sdb.service
+          BindsTo=dev-vdb.device
+          After=dev-vdb.device var.mount
+          Before=systemd-fsck@dev-vdb.service
           Before=shutdown.target
 
           [Service]
           Type=oneshot
           RemainAfterExit=yes
           ExecStart=/bin/bash -c "/bin/rm -rf /var/lib/containers/*"
-          ExecStart=/bin/chcon -t fixed_disk_device_t /dev/sdb
-          ExecStart=/usr/lib/systemd/systemd-makefs xfs /dev/sdb
+          ExecStart=/bin/chcon -t fixed_disk_device_t /dev/vdb
+          ExecStart=/usr/lib/systemd/systemd-makefs xfs /dev/vdb
           TimeoutSec=0
 
           [Install]
           WantedBy=var-lib-containers.mount
         enabled: true
-        name: systemd-mkfs@dev-sdb.service
+        name: systemd-mkfs@dev-vdb.service
       - contents: |
           [Unit]
-          Description=Mount /dev/sdb to /var/lib/containers
+          Description=Mount /dev/vdb to /var/lib/containers
           Before=local-fs.target
-          Requires=systemd-mkfs@dev-sdb.service
-          After=systemd-mkfs@dev-sdb.service
+          Requires=systemd-mkfs@dev-vdb.service
+          After=systemd-mkfs@dev-vdb.service
 
           [Mount]
-          What=/dev/sdb
+          What=/dev/vdb
           Where=/var/lib/containers
           Type=xfs
           Options=defaults,prjquota
