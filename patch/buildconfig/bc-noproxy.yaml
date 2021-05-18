@@ -1,0 +1,6 @@
+spec:
+  buildDefaults:
+    defaultProxy:
+      httpProxy: ""
+      httpsProxy: ""
+      noProxy: ""
