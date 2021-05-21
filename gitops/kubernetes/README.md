@@ -1,1 +1,0 @@
-GitOps Operator related manifests
