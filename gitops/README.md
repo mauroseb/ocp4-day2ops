@@ -1,1 +1,1 @@
-GitHub Operator related stuff
+GitOps Operator related stuff
