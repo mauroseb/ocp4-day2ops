@@ -1,1 +1,1 @@
-GitOps Operator related stuff
+GitOps Operator (ArgoCD) related stuff
