@@ -1,0 +1,72 @@
+ After creating a Quay instance based on the Customizing External Access to the Registry. All traffic heading to https://console-openshift-console.apps.<domain.nl> is being redirected to the created route gerbens-registry.apps.infra.<domain.nl>. When deleting the namespace where the operator is active, the console works again.
+
+(link to documentation https://access.redhat.com/documentation/en-us/red_hat_quay/3.5/html/deploy_red_hat_quay_on_openshift_with_the_quay_operator/advanced_concepts#customizing_external_access_to_the_registry)
+
+
+Quay instance config:
+
+```
+apiVersion: quay.redhat.com/v1
+kind: QuayRegistry
+metadata:
+  name: test-quay-5
+
+spec:
+  configBundleSecret: test-config-bundle-latest
+
+```
+
+
+Quay secret values:
+```
+config.yaml:
+
+SERVER_HOSTNAME: gerbens-registry.apps.infra.<DOMAIN.nl>
+ALLOW_PULLS_WITHOUT_STRICT_LOGGING: false
+AUTHENTICATION_TYPE: LDAP
+AVATAR_KIND: local
+GITHUB_LOGIN_CONFIG: {}
+GITHUB_TRIGGER_CONFIG: {}
+GITLAB_TRIGGER_KIND: {}
+LDAP_ADMIN_DN: <LDAP USER>
+LDAP_ADMIN_PASSWD: <LDAP PASSWORD>
+LDAP_ALLOW_INSECURE_FALLBACK: false
+LDAP_BASE_DN:
+    - 'DC=DC'
+    - ' DC=DOMAIN'
+    - ' DC=nl'
+LDAP_EMAIL_ATTR: mail
+LDAP_SECONDARY_USER_RDNS:
+    - 'ou=RDNS'
+LDAP_UID_ATTR: sAMAccountName
+LDAP_URI: <LDAPSERVER>
+LDAP_UID_ATTR: sAMAccountName
+LDAP_USER_RDN:
+    - ou=UID
+LOGS_MODEL: database
+LOGS_MODEL_CONFIG: {}
+REFERRED_URL_SCHEME: https
+REGISTRY_TITLE: Quay
+REGISTRY_TITLE_SHORT: Quay
+SEARCH_MAX_RESULT_PAGE_COUNT: 10
+SEARCH_RESULTS_PER_PAGE: 10
+SUPER_USERS:
+    - <SUPER_USERS>
+TAG_EXPIRATION_OPTIONS:
+    - 2w
+TEAM_RESYNC_STALE_TIME: 60m
+TESTING: false
+
+
+
+test-config-bundle-latest Secret:
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-config-bundle-latest
+data:
+  config.yaml: <CONFIG HASH>
+  ldap.crt: < LDAP CERT HASH>
+  ssl.cert: <SSL CERT HASH>
+  ssl.key: <SSL key HASH>
+
