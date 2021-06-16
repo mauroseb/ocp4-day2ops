@@ -1,0 +1,59 @@
+kind: CronJob
+apiVersion: batch/v1beta1
+metadata:
+  name: ldap-syncer
+  namespace: openshift-authentication
+  labels:
+    app: ldap-syncer
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        app: ldap-syncer
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app: ldap-syncer
+        spec:
+          containers:
+            - name: ldap-syncer
+              image: "registry.redhat.io/openshift4/ose-cli:v4.7"
+              command:
+                - "/bin/bash"
+                - "-c"
+                - oc adm groups sync --whitelist=/etc/ldap-syncer-whitelist/whitelist.txt --sync-config=/etc/ldap-syncer-conf/ldap-syncer.yaml --confirm
+              volumeMounts:
+                - name: "ldap-syncer-conf-vol"
+                  mountPath: "/etc/ldap-syncer-conf"
+                - name: "ldap-syncer-whitelist-vol"
+                  mountPath: "/etc/ldap-syncer-whitelist"
+                - name: "ldap-syncer-bind-password"
+                  mountPath: "/etc/ldap-syncer-pass"
+                - name: "ldap-syncer-ca-vol"
+                  mountPath: "/etc/ldap-syncer-ca"
+          volumes:
+            - name: "ldap-syncer-conf-vol"
+              configMap:
+                name: "ldap-syncer-conf"
+            - name: "ldap-syncer-whitelist-vol"
+              configMap:
+                name: "ldap-syncer-whitelist"
+            - name: "ldap-syncer-bind-password"
+              secret:
+                secretName: "v4-0-config-user-idp-1-bind-password"
+            - name: "ldap-syncer-ca-vol"
+              configMap:
+                name: "ldap-syncer-tls-ca"
+          restartPolicy: "Never"
+          terminationGracePeriodSeconds: 30
+          activeDeadlineSeconds: 500
+          dnsPolicy: "ClusterFirst"
+          serviceAccountName: "ldap-syncer-sa"
+          serviceAccount: "ldap-syncer-sa"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
+

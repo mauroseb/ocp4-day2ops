@@ -1,0 +1,14 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ldap-syncer-binding
+  labels:
+    app: ldap-syncer
+subjects:
+  - kind: ServiceAccount
+    name: ldap-syncer-sa
+    namespace: openshift-authentication
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ldap-syncer

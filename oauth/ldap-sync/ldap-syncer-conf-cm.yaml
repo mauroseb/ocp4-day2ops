@@ -1,0 +1,30 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ldap-syncer-conf
+  namespace: openshift-authentication
+  labels:
+    app: ldap-syncer
+data:
+  ldap-syncer.yaml: |
+    kind: "LDAPSyncConfig"
+    apiVersion: "v1"
+    url: "ldap://ice-idm-01.lab.local"
+    insecure: false
+    bindDN: "uid=rhsso,cn=sysaccounts,cn=etc,dc=lab,dc=local"
+    bindPassword:
+      file: "/etc/ldap-syncer-pass/bindPassword"
+    ca: "/etc/ldap-syncer-ca/ca.crt"
+    rfc2307:
+      groupsQuery:
+        baseDN: "cn=groups,cn=accounts,dc=lab,dc=local"
+        derefAliases: never
+        filter: "(objectClass=groupofnames)"
+      groupUIDAttribute: "dn"
+      groupNameAttributes: ["cn"]
+      groupMembershipAttributes: ["member"]
+      usersQuery:
+        baseDN: "cn=users,cn=accounts,dc=lab,dc=local"
+        derefAliases: never
+      userNameAttributes: ["uid"]
+      userUIDAttribute: "dn"

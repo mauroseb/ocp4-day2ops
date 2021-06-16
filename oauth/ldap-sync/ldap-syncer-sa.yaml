@@ -1,0 +1,7 @@
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: ldap-syncer-sa
+  namespace: openshift-authentication
+  labels:
+    app: ldap-syncer

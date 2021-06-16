@@ -1,0 +1,10 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ldap-syncer-whitelist
+  namespace: openshift-authentication
+  labels:
+    app: ldap-syncer
+data:
+  whitelist.txt: |
+    cn=devops,cn=groups,cn=accounts,dc=lab,dc=local
