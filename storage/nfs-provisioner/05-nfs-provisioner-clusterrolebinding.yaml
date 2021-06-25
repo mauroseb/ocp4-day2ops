@@ -1,10 +1,10 @@
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: run-nfs-provisioner
+  name: nfs-provisioner-runner-binding
 subjects:
   - kind: ServiceAccount
-    name: nfs-provisioner
+    name: nfs-provisioner-sa
     namespace: nfs-provisioner
 roleRef:
   kind: ClusterRole
