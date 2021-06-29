@@ -1,0 +1,22 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+metadata:
+  name: default
+  namespace: openshift-compliance
+rawResultStorage:
+  pvAccessModes:
+  - ReadWriteOnce
+  rotation: 3
+  size: 1Gi
+  storageClassName: nfs-storage
+roles:
+- worker
+- master
+scanTolerations:
+- effect: NoSchedule
+  key: node-role.kubernetes.io/infra
+  operator: Exists
+- effect: NoSchedule
+  key: node-role.kubernetes.io/master
+  operator: Exists
+schedule: 0 1 * * *
