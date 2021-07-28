@@ -14,3 +14,7 @@ spec:
       key: node-role.kubernetes.io/infra
       operator: Exists
   replicas: 3
+  logging:
+    access:
+      destination:
+        type: Container
