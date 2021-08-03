@@ -1,0 +1,7 @@
+additionalNetworks:
+  - name: extnet1
+    namespace: multus-test
+    rawCNIConfig: '{ "cniVersion": "0.3.1", "name": "extnet1", "type": "macvlan",
+      "master": "enp7s0", "mode": "bridge", "ipam": 
+      {  "type": "whereabouts", "range": "192.168.2.225/28", "leader_lease_duration": 1500, "leader_renew_deadline": 1000, "leader_retry_period": 500} }'
+    type: Raw
