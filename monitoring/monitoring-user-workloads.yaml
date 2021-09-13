@@ -15,3 +15,5 @@ data:
         limits:
           cpu: 900m
           memory: 2Gi
+      externalLabels:
+        cluster: ocp4-bm-t1-lab-local
