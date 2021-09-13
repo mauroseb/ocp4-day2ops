@@ -1,0 +1,18 @@
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: priv-aws
+  namespace: openshift-ingress-operator
+spec:
+  domain: internal.ocp4.oddi.info
+  endpointPublishingStrategy:
+    type: LoadBalancerService
+    loadBalancer:
+      scope: Internal
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        zone: private
+  routeSelector:
+    matchLabels:
+      type: priv
