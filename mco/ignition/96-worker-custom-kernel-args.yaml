@@ -1,0 +1,8 @@
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 96-worker-custom-kernel-args
+spec:
+  kernelArguments:
+    - loglevel=7
