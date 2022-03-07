@@ -1,0 +1,16 @@
+apiVersion: local.storage.openshift.io/v1alpha1
+kind: LocalVolumeSet
+metadata:
+  name: localblock
+  namespace: openshift-local-storage
+spec:
+  storageClassName: lso
+  volumeMode: Block
+  maxDeviceCount: 10
+  deviceInclusionSpec:
+    minSize: 40G
+    maxSize: 60G
+    deviceTypes:
+    - disk
+    deviceMechanicalProperties:
+    - Rotational
