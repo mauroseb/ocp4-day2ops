@@ -5,7 +5,8 @@ metadata:
   namespace: openshift-local-storage
 spec:
   storageClassName: lso
-  volumeMode: Block
+  volumeMode: Filesystem
+  fstype: ext4
   maxDeviceCount: 10
   deviceInclusionSpec:
     minSize: 40G
