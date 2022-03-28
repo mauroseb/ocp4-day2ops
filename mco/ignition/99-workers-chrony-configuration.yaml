@@ -3,7 +3,7 @@ kind: MachineConfig
 metadata:
   labels:
     machineconfiguration.openshift.io/role: worker
-  name: workers-chrony-configuration
+  name: 99-workers-chrony-configuration
 spec:
   config:
     ignition:
