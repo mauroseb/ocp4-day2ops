@@ -10,7 +10,7 @@ data:
     prometheusK8s:
       retention: 36h
       externalLabels:
-        cluster: ocp4-bm-t1-lab-local
+        cluster: t1-lab-local
       volumeClaimTemplate:
         metadata:
           name: prometheusdb
