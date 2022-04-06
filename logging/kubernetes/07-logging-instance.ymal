@@ -11,11 +11,16 @@ spec:
       application:
         maxAge: 1d
       infra:
-        maxAge: 7d
+        maxAge: 1d
       audit:
-        maxAge: 7d
+        maxAge: 1d
     elasticsearch:
       nodeCount: 3
+      tolerations:
+      - effect: NoSchedule 
+        key: node-role.kubernetes.io/infra 
+        operator: Exists
+        tolerationSeconds: 6000
       storage: {}
       resources:
         requests:
@@ -31,6 +36,17 @@ spec:
     type: "kibana"
     kibana:
       replicas: 1
+      resources:
+        limits:
+          memory: 2Gi
+        requests:
+          cpu: 100m
+          memory: 1Gi
+      tolerations:
+      - effect: NoSchedule 
+        key: node-role.kubernetes.io/infra 
+        operator: Exists
+        tolerationSeconds: 6000
   curation:
     type: "curator"
     curator:
@@ -38,4 +54,16 @@ spec:
   collection:
     logs:
       type: "fluentd"
-      fluentd: {}
+      fluentd:
+        tolerations:
+        - effect: NoSchedule 
+          key: node-role.kubernetes.io/infra 
+          operator: Exists
+          tolerationSeconds: 6000
+        resources:
+          limits:
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 1Gi
+            
