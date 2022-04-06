@@ -23,8 +23,11 @@ spec:
         tolerationSeconds: 6000
       storage: {}
       resources:
+        limits:
+          memory: 16Gi
         requests:
-          memory: "8Gi"
+          cpu: 200m
+          memory: 8Gi
       proxy:
         resources:
           limits:
