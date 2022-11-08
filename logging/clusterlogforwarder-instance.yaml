@@ -1,0 +1,42 @@
+apiVersion: "logging.openshift.io/v1"
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  outputs:
+   - name: rsyslog-1
+     type: syslog
+     syslog:
+       addLogSource: true
+       facility: user
+       msgID: rosa
+       procID: mauro-14
+       payloadKey: message
+       rfc: RFC5424
+       severity: informational
+     url: 'tcp://10.1.10.10:1514'
+   - name: cloudwatch-1
+     type: cloudwatch
+     cloudwatch:
+       groupBy: logType
+       groupPrefix: mauro-14
+       region: eu-central-1
+     secret:
+       name: cw-secret
+  pipelines:
+   - name: app-logs
+     inputRefs:
+     - application
+     outputRefs:
+     - cloudwatch-1
+   - name: infra-logs
+     inputRefs:
+     - infrastructure
+     outputRefs:
+     - cloudwatch-1
+   - name: audit-logs
+     inputRefs:
+     - audit
+     outputRefs:
+     - rsyslog-1
