@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logger
+  labels:
+    app: logger
+spec:
+  selector:
+    matchLabels:
+      app: logger
+  template:
+    metadata:
+      labels:
+        app: logger
+        app.kubernetes.io/name: logger
+        app.kubernetes.io/version: "0.1"
+        app.kubernetes.io/component: logger
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: logger
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop:
+            - ALL
+        image: busybox
+        command:
+        - "sh"
+        args:
+        - "-c"
+        - "while true; do echo 'logging just beacuse'; sleep 10; done"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 150Mi
+          limits:
+            cpu: 300m
+            memory: 300Mi
