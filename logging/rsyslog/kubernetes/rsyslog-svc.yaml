@@ -25,3 +25,22 @@ subsets:
   - name: rsyslog
     port: 1514
     protocol: TCP
+# To replace Endpoint with EndpointSlice
+#---
+#kind: EndpointSlice
+#apiVersion: discovery.k8s.io/v1
+#metadata:
+#  labels:
+#    extsvc: external-rsyslog-1
+#    kubernetes.io/service-name: external-rsyslog-1
+#  name: external-rsyslog-1-xsmra
+#addressType: IPv4
+#endpoints:
+#- addresses:
+#  - 10.1.10.10
+#  conditions:
+#    ready: true
+#ports:
+#- name: rsyslog
+#  port: 1514
+#  protocol: TCP

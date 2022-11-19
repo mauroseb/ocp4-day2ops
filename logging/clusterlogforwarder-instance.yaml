@@ -15,7 +15,7 @@ spec:
        payloadKey: message
        rfc: RFC5424
        severity: informational
-     url: 'tcp://10.1.10.10:1514'
+     url: 'tcp://external-rsyslog-1:1514'
    - name: cloudwatch-1
      type: cloudwatch
      cloudwatch:
